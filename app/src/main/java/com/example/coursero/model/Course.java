@@ -3,21 +3,45 @@ package com.example.coursero.model;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.example.coursero.util.Constants;
+
+import java.util.ArrayList;
 
 @Entity(tableName = Constants.COURSE_TABLE_NAME)
 public class Course {
 
     @NonNull()
-    @PrimaryKey()
+    @PrimaryKey(autoGenerate = true)
     private int courseId;
-    private String title;
-    private String url;
-    private String isCompleted;
-    private String duration;
-    private String completedUpTo;
+    private String title = "title";
+    private String url = "Url";
+    private boolean isCompleted = false;
+    private String duration = "duration";
+    private float completedUpTo = 0.0f;
+    private ArrayList<String> savedNotes = new ArrayList<>();
+
+
+    public Course(String title, String url, String duration) {
+        this.title = title;
+        this.url = url;
+        this.duration = duration;
+    }
+
+    @Ignore
+    public Course() {
+    }
+
+    public ArrayList<String> getSavedNotes() {
+        return savedNotes;
+    }
+
+    public void setSavedNotes(ArrayList<String> savedNotes) {
+        this.savedNotes = savedNotes;
+    }
+
 
     public int getCourseId() {
         return courseId;
@@ -43,11 +67,11 @@ public class Course {
         this.url = url;
     }
 
-    public String getIsCompleted() {
+    public boolean getIsCompleted() {
         return isCompleted;
     }
 
-    public void setIsCompleted(String isCompleted) {
+    public void setIsCompleted(boolean isCompleted) {
         this.isCompleted = isCompleted;
     }
 
@@ -59,13 +83,28 @@ public class Course {
         this.duration = duration;
     }
 
-    public String getCompletedUpTo() {
+    public float getCompletedUpTo() {
         return completedUpTo;
     }
 
-    public void setCompletedUpTo(String completedUpTo) {
+    public void setCompletedUpTo(float completedUpTo) {
         this.completedUpTo = completedUpTo;
     }
 
+    public void saveNoteToCurrentCourse(float currentTimeStamp, String note) {
+        savedNotes.add(currentTimeStamp + Constants.DIFFERENTIATORS_SIGN + note);
+    }
 
+    @Override
+    public String toString() {
+        return "Course{" +
+                "courseId=" + courseId +
+                ", title='" + title + '\'' +
+                ", url='" + url + '\'' +
+                ", isCompleted=" + isCompleted +
+                ", duration='" + duration + '\'' +
+                ", completedUpTo=" + completedUpTo +
+                ", savedNotes=" + savedNotes +
+                '}';
+    }
 }

@@ -26,6 +26,10 @@ public interface CourseDao {
     @Query("DELETE FROM " + Constants.COURSE_TABLE_NAME)
     void deleteAllEvents();
 
-    @Query("SELECT * FROM " + Constants.COURSE_TABLE_NAME + " WHERE " + Constants.PRIMARY_KEY + "=:server_Id")
-    LiveData<Course> getEvent(String server_Id);
+
+    @Query("SELECT * FROM " + Constants.COURSE_TABLE_NAME + " ORDER BY " + Constants.PRIMARY_KEY + "  ASC")
+    Course[] getAllCourse();
+
+    @Query("SELECT savedNotes FROM " + Constants.COURSE_TABLE_NAME + " WHERE " + Constants.PRIMARY_KEY + "=:course_Id")
+    LiveData<String> getNotes(Integer course_Id);
 }

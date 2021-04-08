@@ -18,5 +18,21 @@ public class CourseStaticDetails {
     public final static String[] URL_COURSE_Duration = new String[]{
             "426", "2712", "1346", "846", "1042", "839", "652", "750", "752", "818"
     };
+
+    public final static String baseRemoteUrlFirst = "https://www.youtube.com/watch?v=";
+    public final static String[] URL_COURSE_URLS = new String[]{
+            "a6oKFvGuTH4"
+            , "H0cJ0gUlgE8"
+            , "ABmqtI7ec7E"
+            , "Hxh6nNHSUjo"
+            , "zwPBMg3SHVU"
+            , "km2P_KQJyO0"
+            , "C5lpPjoivaw"
+            , "TSIhiZ5jRB0"
+            , "FLQ-Vhw1NYQ"
+            , "bKueYVtV0eA"
+    };
+
+
 }
 

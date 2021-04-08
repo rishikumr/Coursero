@@ -9,12 +9,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.coursero.R;
-import com.example.coursero.util.Constants;
 
 public class CourseListAdaptor extends RecyclerView.Adapter<CourseListAdaptor.CourseViewListHolder> {
 
-    private String[] courseTitleList;
-    private String[] coursesDurationList;
+    private final String[] courseTitleList;
+    private final String[] coursesDurationList;
     private onCourseSelectListener listener;
 
 
@@ -33,7 +32,6 @@ public class CourseListAdaptor extends RecyclerView.Adapter<CourseListAdaptor.Co
 
     @Override
     public void onBindViewHolder(@NonNull CourseViewListHolder holder, int position) {
-        Constants.logD(String.valueOf(courseTitleList[0]));
         holder.courseTitle.setText(courseTitleList[position]);
         holder.courseDuration.setText(coursesDurationList[position]);
     }

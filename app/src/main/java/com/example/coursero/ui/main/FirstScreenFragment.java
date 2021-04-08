@@ -1,47 +1,42 @@
 package com.example.coursero.ui.main;
 
-import androidx.lifecycle.ViewModelProvider;
-
-import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.example.coursero.R;
 import com.example.coursero.adaptors.CourseListAdaptor;
-import com.example.coursero.util.Constants;
+import com.example.coursero.model.Course;
 import com.example.coursero.viewmodel.CourseViewModel;
 
-public class MainFragment extends Fragment {
+public class FirstScreenFragment extends Fragment {
 
-    NavController navController;
-    RecyclerView recyclerView;
-    CourseListAdaptor adaptor;
-    String[] courseTitleList;
-    String[] coursesDurationList;
+    private NavController navController;
+    private RecyclerView recyclerView;
+    private CourseListAdaptor adaptor;
+    private String[] courseTitleList;
+    private String[] coursesDurationList;
     private CourseViewModel mViewModel;
-    ;
+    private Course[] getAllCourse;
 
-    public static MainFragment newInstance() {
-        return new MainFragment();
+    public static FirstScreenFragment newInstance() {
+        return new FirstScreenFragment();
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mViewModel = new ViewModelProvider(requireActivity()).get(CourseViewModel.class);
-        courseTitleList = mViewModel.getCoursesTitleList();
-        coursesDurationList = mViewModel.getCoursesDurationList();
+
     }
 
     @Nullable
@@ -50,41 +45,34 @@ public class MainFragment extends Fragment {
         return inflater.inflate(R.layout.main_fragment, container, false);
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
-
-
-    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // Direct jumping to home screen for testing
-        /*SharedPreferences pref = requireActivity().getSharedPreferences(Constants.MyPref, 0); // 0 - for private mode
-        String currToken = pref.getString("mUserToken", null);*/
+        mViewModel = new ViewModelProvider(requireActivity()).get(CourseViewModel.class);
+        courseTitleList = mViewModel.getCoursesTitleList();
+        coursesDurationList = mViewModel.getCoursesDurationList();
+        getAllCourse = mViewModel.getAllCourse();
 
         recyclerView = view.findViewById(R.id.course_list_rcv);
-
-        //Constants.logD(String.valueOf(courseTitleList.length));
-        Constants.logD(" CourseTitle" + courseTitleList[0]);
-        Constants.logD(" CourseDuration" + coursesDurationList[0]);
         adaptor = new CourseListAdaptor(courseTitleList, coursesDurationList);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adaptor);
         LinearLayoutManager layoutManager = new LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
 
+        navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
         adaptor.setOnCourseSelectListener(new CourseListAdaptor.onCourseSelectListener() {
             @Override
             public void onCourseListItemClick(int position) {
-                Constants.logD("Selected Course" + position);
-                Constants.logD("Selected CourseTitle" + courseTitleList[position]);
-                Constants.logD("Selected CourseDuration" + coursesDurationList[position]);
+                //Constants.logD(getAllCourse[position].getTitle());
+                mViewModel.setCurrentSelectedCourse(getAllCourse[position]);
+                navController.navigate(R.id.action_mainFragment_to_secondScreenFragment);
+
             }
         });
+
 
     }
 
