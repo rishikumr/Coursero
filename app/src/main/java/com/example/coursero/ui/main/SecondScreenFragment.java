@@ -51,11 +51,6 @@ public class SecondScreenFragment extends Fragment implements View.OnClickListen
 
         super.onCreate(savedInstanceState);
         mViewModel = new ViewModelProvider(requireActivity()).get(CourseViewModel.class);
-        currentCourse = mViewModel.getCurrentSelectedCourse();
-        //Get Current status from stored value
-        currentTimeStamp = currentCourse.getCompletedUpTo();
-        savedNotes = currentCourse.getSavedNotes();
-
 
     }
 
@@ -69,6 +64,14 @@ public class SecondScreenFragment extends Fragment implements View.OnClickListen
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+
+        currentCourse = mViewModel.getCurrentSelectedCourse();
+        //Get Current status from stored value
+        currentTimeStamp = currentCourse.getCompletedUpTo();
+        savedNotes = currentCourse.getSavedNotes();
+
+
         youTubePlayerView = view.findViewById(R.id.youtube_player_view);
         getActivity().getLifecycle().addObserver(youTubePlayerView);
 
@@ -106,7 +109,6 @@ public class SecondScreenFragment extends Fragment implements View.OnClickListen
                 super.onStateChange(youTubePlayer, state);
                 switch (state) {
 
-
                     case ENDED:
                         videoFinished();
                         break;
@@ -114,6 +116,7 @@ public class SecondScreenFragment extends Fragment implements View.OnClickListen
                         videoPaused(youTubePlayer);
                         break;
                     case PLAYING:
+                        updateDB();
                         break;
                 }
             }
@@ -167,7 +170,7 @@ public class SecondScreenFragment extends Fragment implements View.OnClickListen
     private void videoWatched(float second) {
         currentTimeStamp = Float.parseFloat(df.format(second));
         boolean isthere = notesMap.containsKey(currentTimeStamp);
-        Constants.logD("  currentTimeStamp =" + currentTimeStamp + "  isthere=" + isthere);
+        //Constants.logD("  currentTimeStamp =" + currentTimeStamp + "  isthere=" + isthere);
         if (isthere) {
             showBottomSheetNotes(CourseBottomSheetDialog.BOTTOM_SHEET_MODE.SEE_NOTE, notesMap.get(currentTimeStamp));
         }
@@ -179,14 +182,16 @@ public class SecondScreenFragment extends Fragment implements View.OnClickListen
     }
 
     private void videoFinished() {
-        currentCourse.setCompletedUpTo(0);
+        //currentCourse.setCompletedUpTo(0);
         currentCourse.setIsCompleted(true);
         updateDB();
+
         navController.navigate(R.id.action_secondScreenFragment_to_thirdFragment);
     }
 
     private void updateDB() {
         //Constants.logD("To be updated the DB" + currentCourse);
+        mViewModel.setCurrentSelectedCourse(currentCourse);
         mViewModel.updateCourse(currentCourse);
     }
 
@@ -198,8 +203,9 @@ public class SecondScreenFragment extends Fragment implements View.OnClickListen
 
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onStop() {
+        super.onStop();
+        mYouTubePlayer.pause();
         updateDB();
     }
 

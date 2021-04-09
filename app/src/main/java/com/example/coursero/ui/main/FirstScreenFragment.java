@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.coursero.R;
 import com.example.coursero.adaptors.CourseListAdaptor;
 import com.example.coursero.model.Course;
+import com.example.coursero.util.Constants;
 import com.example.coursero.viewmodel.CourseViewModel;
 
 public class FirstScreenFragment extends Fragment {
@@ -36,13 +37,13 @@ public class FirstScreenFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        mViewModel = new ViewModelProvider(requireActivity()).get(CourseViewModel.class);
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.main_fragment, container, false);
+        return inflater.inflate(R.layout.first_fragment, container, false);
     }
 
 
@@ -50,7 +51,7 @@ public class FirstScreenFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mViewModel = new ViewModelProvider(requireActivity()).get(CourseViewModel.class);
+
         courseTitleList = mViewModel.getCoursesTitleList();
         coursesDurationList = mViewModel.getCoursesDurationList();
         getAllCourse = mViewModel.getAllCourse();
@@ -66,9 +67,16 @@ public class FirstScreenFragment extends Fragment {
         adaptor.setOnCourseSelectListener(new CourseListAdaptor.onCourseSelectListener() {
             @Override
             public void onCourseListItemClick(int position) {
-                //Constants.logD(getAllCourse[position].getTitle());
+                Constants.logD(getAllCourse[position].getTitle());
                 mViewModel.setCurrentSelectedCourse(getAllCourse[position]);
-                navController.navigate(R.id.action_mainFragment_to_secondScreenFragment);
+                if (getAllCourse[position].getQuiz_status() == 10) {
+                    navController.navigate(R.id.action_mainFragment_to_fourthFragment);
+                } else if (getAllCourse[position].getIsCompleted()) {
+                    navController.navigate(R.id.action_mainFragment_to_thirdFragment);
+                } else {
+                    navController.navigate(R.id.action_mainFragment_to_secondScreenFragment);
+                }
+
 
             }
         });

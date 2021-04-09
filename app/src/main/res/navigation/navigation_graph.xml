@@ -9,10 +9,16 @@
         android:id="@+id/mainFragment"
         android:name="com.example.coursero.ui.main.FirstScreenFragment"
         android:label="main_fragment"
-        tools:layout="@layout/main_fragment">
+        tools:layout="@layout/first_fragment">
         <action
             android:id="@+id/action_mainFragment_to_secondScreenFragment"
             app:destination="@id/secondScreenFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_thirdFragment"
+            app:destination="@id/thirdFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_fourthFragment"
+            app:destination="@id/fourthFragment" />
     </fragment>
     <fragment
         android:id="@+id/secondScreenFragment"
@@ -26,7 +32,7 @@
     </fragment>
     <fragment
         android:id="@+id/thirdFragment"
-        android:name="com.example.coursero.ThirdFragment"
+        android:name="com.example.coursero.ui.main.ThirdFragment"
         android:label="fragment_third"
         tools:layout="@layout/fragment_third">
         <action
@@ -36,7 +42,7 @@
     </fragment>
     <fragment
         android:id="@+id/fourthFragment"
-        android:name="com.example.coursero.FourthFragment"
+        android:name="com.example.coursero.ui.main.FourthFragment"
         android:label="fragment_fourth"
         tools:layout="@layout/fragment_fourth" />
 </navigation>

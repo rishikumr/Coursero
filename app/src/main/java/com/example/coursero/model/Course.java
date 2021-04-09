@@ -23,6 +23,15 @@ public class Course {
     private float completedUpTo = 0.0f;
     private ArrayList<String> savedNotes = new ArrayList<>();
 
+    private int quiz_status = 0;
+
+    public int getQuiz_status() {
+        return quiz_status;
+    }
+
+    public void setQuiz_status(int quiz_status) {
+        this.quiz_status = quiz_status;
+    }
 
     public Course(String title, String url, String duration) {
         this.title = title;

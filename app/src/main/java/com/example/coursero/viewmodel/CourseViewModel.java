@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData;
 
 import com.example.coursero.database.CourseRepository;
 import com.example.coursero.model.Course;
+import com.example.coursero.util.Constants;
 
 public class CourseViewModel extends AndroidViewModel {
     CourseRepository mRepository;
@@ -46,10 +47,12 @@ public class CourseViewModel extends AndroidViewModel {
     }
 
     public Course getCurrentSelectedCourse() {
+        Constants.logD("getCurrentSelectedCourse" + mCurrentCourse);
         return mCurrentCourse;
     }
 
     public void setCurrentSelectedCourse(Course course) {
+        Constants.logD("setCurrentSelectedCourse" + course);
         mCurrentCourse = course;
     }
 
@@ -58,6 +61,7 @@ public class CourseViewModel extends AndroidViewModel {
     }
 
     public void saveNoteToCurrentCourse(float currentTimeStamp, String notes) {
+
         mCurrentCourse.saveNoteToCurrentCourse(currentTimeStamp, notes);
     }
 
