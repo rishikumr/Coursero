@@ -54,6 +54,13 @@ APP STATUS: screen 1 and screen 2 is completed. screen 3 and 4 still require som
 SCREENSHOT:
 
 ![Screenshot_20210409-175225 1](https://user-images.githubusercontent.com/31123825/114184878-b0622980-9962-11eb-9a69-e55b46184840.png)
+
+
 ![Screenshot_20210409-175346 1](https://user-images.githubusercontent.com/31123825/114184927-bce68200-9962-11eb-9810-1d28f1d3af4d.png)
+
+
 ![Screenshot_20210409-175401 1](https://user-images.githubusercontent.com/31123825/114184959-c7088080-9962-11eb-88d8-8eb7bead089e.png)
+
+![Screenshot_20210409-183951 1](https://user-images.githubusercontent.com/31123825/114185457-6168c400-9963-11eb-92a3-20048a6c5ee3.png)
+
 
